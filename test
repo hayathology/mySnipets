@@ -1,0 +1,42 @@
+	"SheetExists": {
+		"prefix": "SheetExists",
+		"body": [
+				"Function SheetExists(ByVal ${1:shName} as String, Optional ${2:wb} As Workbook) As Boolean",
+				"\tDim i As Integer",
+				"\tIf ${2:wb} is Nothing Then",
+				"\t\tSet ${2:wb} = thisWorkbook",
+				"\tEnd If",
+				"\tFor i = 1 To ${2:wb}.Sheets.Count",
+				"\t\tIf ${2:wb}.Sheets(i).Name = ${1:shName} Then",
+				"\t\t\tSheetExists = True",
+				"\t\t\tExit Function",
+				"\t\tEnd If",
+				"\tNext i",
+				"\tSheetExists = False",
+				"End Function"
+		],
+		"description": "check sheet exists"
+	},
+	"AddSheet": {
+		"prefix": "AddSheet",
+		"body": [
+				"Function AddSheet(ByVal ${1:shName} as String, Optional ${2:wb} As Workbook) As Boolean",
+				"\tDim i As Integer",
+				"\tDim ${3:hasSheet} As Boolean",
+				"\tIf ${2:wb} is Nothing Then",
+				"\t\tSet ${2:wb} = ThisWorkbook",
+				"\tEnd If",
+				"\tFor i = 1 To ${2:wb}.Sheets.Count",
+				"\t\tIf ${2:wb}.Sheets(i).Name = ${1:shName} Then",
+				"\t\t\t${3:hasSheet} = True",
+				"\t\t\tExit For",
+				"\t\tEnd If",
+				"\tNext i",
+				"\tIf Not ${3:hasSheet} Then",
+				"\t\t${2:wb}.Sheets.Add.Name = ${1:shName}",
+				"\tEnd If",
+				"\tAddSheet = Not ${3:hasSheet}",
+				"End Function"
+		],
+		"description": "add sheet"
+	},
