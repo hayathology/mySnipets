@@ -1,1 +1,31 @@
 
+javascript: (
+  () => {
+      const SelectionTools = {
+        SRV:{category:'駆動機器', device:'MELSERVO'},
+        INV:{category:'駆動機器', device:'FREQROL'},
+        GOT:{category:'グラフィックオペレーションターミナル', device:'GOT'}
+      }
+      const Locators = {
+        category:{tagName:'category-list', textPropName:'textContent'},
+        device:{tagName:'select-device-dialog-display', textPropName:'deviceType'}
+      }
+      const displayList = (parentTagName, propName) => {
+        return [...document.querySelectorAll(`${parentTagName}>ul>li`)].map((listElement, idx) => {
+          const deviceInfo = listElement._tag?.displayInfo
+          return deviceInfo ? {idx:idx + 1, name:deviceInfo[propName], data:{...deviceInfo}}:{idx:idx + 1, name:listElement[propName]}
+        })
+      }
+      const elementIndex = (toolName, elementName) => {
+        const list = displayList(Locators[elementName].tagName, Locators[elementName].textPropName)
+        console.log(list)
+        return list.find(elm => elm.name === SelectionTools[toolName][elementName])?.idx
+      }
+      ['SRV','INV','GOT'].forEach(name => {
+        ['category','device'].forEach(loc => {
+        const myIndex = elementIndex(name,loc)
+        console.log(`${name} : ${loc} index is ${myIndex}`)
+        })
+      })
+    }
+)()
